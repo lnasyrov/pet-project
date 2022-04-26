@@ -12,6 +12,7 @@ pipeline {
             }
             steps {
                     sh '''
+                    git status
                     cd spring-petclinic
                     ./mvnw package
                     '''
