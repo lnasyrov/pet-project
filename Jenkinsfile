@@ -8,8 +8,11 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-         {isPRBuild()}
-        }
+                allOf {
+                    environment name: 'CHANGE_ID', value: ''
+                    branch 'master'
+                }
+            }
             steps {
                     sh '''
                     cd spring-petclinic
