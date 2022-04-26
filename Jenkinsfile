@@ -8,9 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-                allOf {
-                    environment name: 'CHANGE_ID', value: ''
-                }
+                BUILD_TRIGGER_BY == BUILD_TRIGGER_BY
             }
             steps {
                     sh '''
