@@ -2,6 +2,16 @@ pipeline {
     agent any
 
     stages {
+        stage('MR_Validation') {
+            steps {
+                withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
+                    sh '''
+                    cd spring-petclinic
+                    ./mvnw package
+                    '''
+                }
+            }
+        }
         stage('Build') {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
