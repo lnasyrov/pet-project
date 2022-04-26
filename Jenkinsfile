@@ -8,19 +8,14 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-          not { triggeredBy cause: "UserIdCause", detail: "admin" }
+           { triggeredBy cause: "UserIdCause", detail: "" }
         } 
             steps {
-        wrap([$class: 'BuildUser']) {
-          sh 'echo "${BUILD_USER}"'
-        }
-      }
-            // steps {
-            //         sh '''
-            //         cd spring-petclinic
-            //         ./mvnw package
-            //         '''
-            // }
+                    sh '''
+                    cd spring-petclinic
+                    ./mvnw package
+                    '''
+            }
         }
         stage('Build') {
             steps {
