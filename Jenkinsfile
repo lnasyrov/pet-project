@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-         expression { params.REQUESTED_ACTION != 'SILENCE' }
+         changeRequest()
         }
             steps {
                     sh '''
