@@ -21,9 +21,8 @@ pipeline {
         stage('Build') {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
-                    sh "pwd"
-                    sh "ls -al"
                     sh '''
+                    git status
                     cd spring-petclinic
                     ./mvnw package
                     echo $CRED | docker login ghcr.io -u lnasyrov --password-stdin
