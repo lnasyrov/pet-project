@@ -11,12 +11,19 @@ pipeline {
           not { triggeredBy cause: "UserIdCause", detail: "admin" }
         } 
             steps {
-                    println("Executed by user $specificCause.userName")
-                    sh '''
-                    cd spring-petclinic
-                    ./mvnw package
-                    '''
-            }
+        wrap([$class: 'BuildUser']) {
+          script {
+             USER_ID = "${BUILD_USER_ID}"
+          }
+        }
+        echo "${USER_ID}"
+      }
+            // steps {
+            //         sh '''
+            //         cd spring-petclinic
+            //         ./mvnw package
+            //         '''
+            // }
         }
         stage('Build') {
             steps {
