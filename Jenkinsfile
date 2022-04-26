@@ -18,7 +18,7 @@ pipeline {
             }
         }
         stage('Deploy') {
-            agent { label 'ansible-master​' }
+            agent { label 'ansible-master' }
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
