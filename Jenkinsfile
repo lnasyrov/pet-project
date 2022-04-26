@@ -11,7 +11,7 @@ pipeline {
            not {triggeredBy cause: "UserIdCause", detail: "admin"} 
         } 
             steps {
-                    BUILD_TRIGGER_BY=$(curl -k --silent ${BUILD_URL}/api/xml | tr '<' '\n' | egrep '^userId>|^userName>' | sed 's/.*>//g' | sed -e '1s/$/ \//g' | tr '\n' ' ')
+                    BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId}"
                     echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
                     sh '''
                     cd spring-petclinic
