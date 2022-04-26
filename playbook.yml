@@ -3,10 +3,6 @@
 - hosts: all
   become: true
   tasks:
-    - shell: "hostname"
-      register: hostname
-    - debug:
-          msg: "{{ hostname.stdout }}"
 
     - name: Installing of the Docker  
       yum:
