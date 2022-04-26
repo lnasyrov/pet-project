@@ -7,9 +7,6 @@ pipeline {
 
     stages {
         stage('MR_Validation') {
-            when {
-        expression {env.GIT_BRANCH == 'main'}
-            }
             steps {
                     sh '''
                     cd spring-petclinic
