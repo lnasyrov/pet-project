@@ -11,8 +11,6 @@ pipeline {
           not {triggeredBy cause: "UserIdCause", detail: "admin"}
         } 
             steps {
-                    echo $BUILD_USER
-                    echo $BUILD_USER_ID
                     sh '''
                     cd spring-petclinic
                     ./mvnw package
