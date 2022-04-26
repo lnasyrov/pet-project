@@ -7,20 +7,16 @@ pipeline {
 
     stages {
         stage('MR_Validation') {
-        when {
-          not { triggeredBy cause: "UserIdCause", detail: "admin" }
-        } 
+            if(manualTrigger) {    
+        // when {
+        //   not { triggeredBy cause: "UserIdCause", detail: "admin" }
+        // } 
             steps {
-                    set -
-                    cd /var/lib/jenkins/workspace/Pipeline-1
-                    export STARTED_BY="`grep -i Started log`"
-                    echo "STARTED BY USER = ${STARTED_BY}"
-                    export JUST_NAME="`echo "${STARTED_BY}" | sed "s@Started by user@@"`"
-                    echo "Jenkins User Name is ${JUST_NAME}"
                     sh '''
                     cd spring-petclinic
                     ./mvnw package
                     '''
+            }
             }
         }
         stage('Build') {
