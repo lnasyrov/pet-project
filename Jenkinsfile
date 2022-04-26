@@ -10,7 +10,7 @@ pipeline {
         when {
                 allOf {
                     environment name: 'CHANGE_ID', value: ''
-                    branch 'master'
+                    branch 'main'
                 }
             }
             steps {
