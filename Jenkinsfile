@@ -7,16 +7,15 @@ pipeline {
 
     stages {
         stage('MR_Validation') {
-            if(manualTrigger) {    
-        // when {
-        //   not { triggeredBy cause: "UserIdCause", detail: "admin" }
-        // } 
+        when {
+          not { triggeredBy cause: "UserIdCause", detail: "admin" }
+        } 
             steps {
+                    println("Executed by user $specificCause.userName")
                     sh '''
                     cd spring-petclinic
                     ./mvnw package
                     '''
-            }
             }
         }
         stage('Build') {
