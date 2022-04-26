@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-           triggeredBy cause: "UserIdCause", detail: "SYSTEM"
+           triggeredBy cause: "UserIdCause", detail: "qua_lnasyrov"
         } 
             steps {
                     sh '''
