@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
-                    properties([parameters([string(defaultValue: 'latest', description: 'Enter version of the image', name: 'VERSION')])])
+                    script{properties([parameters([string(defaultValue: 'latest', description: 'Enter version of the image', name: 'VERSION')])])}
                     sh "pwd"
                     sh "ls -al"
                     sh '''
