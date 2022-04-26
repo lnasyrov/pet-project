@@ -8,11 +8,10 @@ pipeline {
     stages {
         stage('MR_Validation') {
             when {
-        expression {env.GIT_BRANCH == '*main*'}
+        expression {env.CHANGE_TARGET == 'origin/main'}
             }
             steps {
                     sh '''
-                    echo "test message"
                     cd spring-petclinic
                     ./mvnw package
                     '''
