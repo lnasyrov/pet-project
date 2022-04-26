@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
             when {
-        branch "HEAD/*"
+        branch "*HEAD*"
             }
             steps {
                     sh '''
