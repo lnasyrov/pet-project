@@ -3,6 +3,9 @@ pipeline {
 
     stages {
         stage('MR_Validation') {
+            when {
+        branch 'main'
+            }
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
