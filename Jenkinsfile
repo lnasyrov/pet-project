@@ -11,8 +11,13 @@ pipeline {
           not { triggeredBy cause: "UserIdCause", detail: "admin" }
         } 
             steps {
+                    set -
+                    cd /var/lib/jenkins/workspace/Pipeline-1
+                    export STARTED_BY="`grep -i Started log`"
+                    echo "STARTED BY USER = ${STARTED_BY}"
+                    export JUST_NAME="`echo "${STARTED_BY}" | sed "s@Started by user@@"`"
+                    echo "Jenkins User Name is ${JUST_NAME}"
                     sh '''
-                    echo $BUILD_USER_ID
                     cd spring-petclinic
                     ./mvnw package
                     '''
