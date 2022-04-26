@@ -8,11 +8,10 @@ pipeline {
     stages {
         stage('MR_Validation') {
             when {
-        branch "*main*"
+        branch "HEAD/*"
             }
             steps {
                     sh '''
-                    git status
                     cd spring-petclinic
                     ./mvnw package
                     '''
@@ -22,7 +21,6 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
-                    git status
                     cd spring-petclinic
                     ./mvnw package
                     echo $CRED | docker login ghcr.io -u lnasyrov --password-stdin
