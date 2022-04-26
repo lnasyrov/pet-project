@@ -11,8 +11,8 @@ pipeline {
           not {triggeredBy cause: "UserIdCause", detail: "admin"}
         } 
             steps {
-                    wrap([$class: 'BuildUser']) {
-                    def user = env.BUILD_USER_ID
+                    echo $BUILD_USER
+                    echo $BUILD_USER_ID
                     sh '''
                     cd spring-petclinic
                     ./mvnw package
