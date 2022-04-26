@@ -7,6 +7,9 @@ pipeline {
 
     stages {
         stage('MR_Validation') {
+        when {
+         expression { params.REQUESTED_ACTION != 'SILENCE' }
+        }
             steps {
                     sh '''
                     cd spring-petclinic
