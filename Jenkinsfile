@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-         not {changeRequest()}
+         {isPRBuild()}
         }
             steps {
                     sh '''
