@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', sudo: true
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml'
                 }
             }
         }
