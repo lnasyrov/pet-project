@@ -6,16 +6,13 @@ pipeline {
         }
 
     stages {
-        stage("preserve build user") {
-            wrap([$class: 'BuildUser']) {
-                GET_BUILD_USER = sh ( script: 'echo "${BUILD_USER}"', returnStdout: true).trim()
-            }
-        }
         stage('MR_Validation') {
         when {
            not {triggeredBy cause: "UserIdCause", detail: "admin"} 
         } 
             steps {
+                    BUILD_TRIGGER_BY=$(curl -k --silent ${BUILD_URL}/api/xml | tr '<' '\n' | egrep '^userId>|^userName>' | sed 's/.*>//g' | sed -e '1s/$/ \//g' | tr '\n' ' ')
+                    echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
                     sh '''
                     cd spring-petclinic
                     ./mvnw package
