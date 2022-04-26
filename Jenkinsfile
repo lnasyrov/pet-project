@@ -6,6 +6,11 @@ pipeline {
         }
 
     stages {
+        stage("preserve build user") {
+            wrap([$class: 'BuildUser']) {
+                GET_BUILD_USER = sh ( script: 'echo "${BUILD_USER}"', returnStdout: true).trim()
+            }
+        }
         stage('MR_Validation') {
         when {
            not {triggeredBy cause: "UserIdCause", detail: "admin"} 
