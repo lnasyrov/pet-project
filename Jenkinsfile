@@ -8,11 +8,9 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-           not {triggeredBy cause: "UserIdCause", detail: "admin"} 
+           triggeredBy cause: "UserIdCause", detail: "SYSTEM"
         } 
             steps {
-                    BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId}"
-                    echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
                     sh '''
                     cd spring-petclinic
                     ./mvnw package
