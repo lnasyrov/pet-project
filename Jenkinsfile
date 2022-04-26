@@ -33,12 +33,7 @@ pipeline {
         stage('Deploy') {
             agent { label 'ansible-master' }
             steps {
-                withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
-                    sh '''
-                    export CR_PAT=$CRED
-                    ansible-playbook /home/ec2-user/playbook.yml
-                    echo "CONGRATULATION!!!"
-                    '''
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', sudo: true
                 }
             }
         }

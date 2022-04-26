@@ -1,0 +1,56 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+    - shell: "hostname"
+      register: hostname
+    - debug:
+          msg: "{{ hostname.stdout }}"
+
+    - name: Installing of the Docker  
+      yum:
+        name: docker
+        state: present
+
+    - name: Enabling of the docker    
+      service:
+        name: docker
+        state: started
+
+    - name: grant permissions for docker to ec2-user
+      shell: "usermod -aG docker ec2-user"
+
+    - name: Python installing
+      yum:
+        name: python
+        state: present
+
+    - name: pip installing
+      yum:
+        name: pip
+        state: present
+
+    - name: docker-py installation
+      pip:
+        name: docker-py
+
+    - name: login into GitHub container registry
+      shell: "echo '{{ lookup('env', 'CR_PAT') }}' | docker login ghcr.io -u lnasyrov --password-stdin"
+
+    - name: pull image from private registry
+      docker_image:
+        name: ghcr.io/lnasyrov/petclinic:latest
+
+    - name: running of the PetClinic image
+      docker_container:
+            name: petclinic
+            image: ghcr.io/lnasyrov/petclinic:latest
+            ports: 8080:8080
+
+    - name: getting of the enpoint
+      shell: "curl ifconfig.me"
+      register: ip
+
+    - debug:
+         msg: "http://{{ ip.stdout }}:8080"
