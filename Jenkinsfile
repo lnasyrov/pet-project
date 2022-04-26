@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
             when {
-        branch "main"
+        expression {env.GIT_BRANCH == 'origin/main'}
             }
             steps {
                     sh '''
@@ -20,8 +20,6 @@ pipeline {
         stage('Build') {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
-                    sh "pwd"
-                    sh "ls -al"
                     sh '''
                     cd spring-petclinic
                     ./mvnw package
