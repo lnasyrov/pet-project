@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
             when {
-        expression {env.CHANGE_TARGET == 'test'}
+        expression {env.BRANCH_NAME == 'origin/main'}
             }
             steps {
                     sh '''
