@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
             steps {
+                properties([parameters([string(defaultValue: 'latest', description: 'Enter version of the image', name: 'VERSION')]), pipelineTriggers([githubPush()])]),
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
                     cd spring-petclinic
