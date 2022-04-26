@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
             when {
-        branch "**"
+        expression {env.GIT_BRANCH == 'origin/main'}
             }
             steps {
                     sh '''
