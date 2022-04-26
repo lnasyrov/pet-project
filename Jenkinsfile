@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-                BUILD_TRIGGER_BY == BUILD_TRIGGER_BY
+                CHANGE_BRANCH == 'main'
             }
             steps {
                     sh '''
