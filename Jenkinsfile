@@ -24,6 +24,7 @@ pipeline {
                     sh '''
                     export CR_PAT=$CRED
                     ansible-playbook /home/ec2-user/playbook.yml
+                    echo "CONGRATULATION!!!"
                     '''
                 }
             }
