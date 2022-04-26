@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
-                    script{properties([parameters([string(defaultValue: 'latest', description: 'Enter version of the image', name: 'VERSION')])])}
+                    script{properties([parameters([string(defaultValue: 'latest', description: 'Enter version of the image', name: 'VERSION')])])
                     sh "pwd"
                     sh "ls -al"
                     sh '''
@@ -28,6 +28,7 @@ pipeline {
                     docker build . -t ghcr.io/lnasyrov/petclinic:$VERSION
                     docker push ghcr.io/lnasyrov/petclinic:$VERSION
                     '''
+                }
                 }
             }
         }
