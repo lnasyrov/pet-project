@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-          changeRequest target: 'main'
+          not { triggeredBy cause: "UserIdCause", detail: "admin" }
         } 
             steps {
                     sh '''
