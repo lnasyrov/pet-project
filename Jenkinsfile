@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(defaultValue: 'latest', description: 'Enter version of the image', name: 'VERSION')
+        }
+
     stages {
         stage('MR_Validation') {
             when {
@@ -18,7 +22,6 @@ pipeline {
         stage('Build') {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
-                    script{properties([parameters([string(defaultValue: 'latest', description: 'Enter version of the image', name: 'VERSION')])])
                     sh "pwd"
                     sh "ls -al"
                     sh '''
@@ -29,12 +32,11 @@ pipeline {
                     docker push ghcr.io/lnasyrov/petclinic:$VERSION
                     '''
                 }
-                }
             }
         }
         stage('Deploy') {
             steps {
-                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml'
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION"
                 }
             }
         }

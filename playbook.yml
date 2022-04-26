@@ -40,12 +40,12 @@
 
     - name: pull image from private registry
       docker_image:
-        name: ghcr.io/lnasyrov/petclinic:latest
+        name: ghcr.io/lnasyrov/petclinic:{{VERSION}}
 
     - name: running of the PetClinic image
       docker_container:
             name: petclinic
-            image: ghcr.io/lnasyrov/petclinic:latest
+            image: ghcr.io/lnasyrov/petclinic:{{VERSION}}
             ports: 8080:8080
 
     - name: getting of the enpoint
