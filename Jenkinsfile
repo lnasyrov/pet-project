@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
             when {
-        expression {env.BRANCH_NAME == 'origin/main'}
+        expression {env.BRANCH_NAME == '**'}
             }
             steps {
                     sh '''
