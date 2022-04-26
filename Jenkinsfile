@@ -8,8 +8,8 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-                CHANGE_BRANCH == 'main'
-            }
+          environment name: 'IS_PULL_REQUEST', value: 'true'
+        } 
             steps {
                     sh '''
                     cd spring-petclinic
