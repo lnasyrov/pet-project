@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
             when {
-        branch "main" && branch "test"
+        branch "main"
             }
             steps {
                     sh '''
