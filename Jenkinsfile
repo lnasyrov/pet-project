@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-          environment name: 'IS_PULL_REQUEST', value: 'true'
+          changeRequest target: 'origin/main'
         } 
             steps {
                     sh '''
