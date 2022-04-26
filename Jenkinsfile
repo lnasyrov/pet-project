@@ -8,15 +8,17 @@ pipeline {
     stages {
         stage('MR_Validation') {
             when {
+<<<<<<< HEAD
         branch "main"
+=======
+        branch "main" && branch "test"
+>>>>>>> 83a19f8a6e5348b4050cb7ae35d8e8683eb7f59d
             }
             steps {
-                withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
                     cd spring-petclinic
                     ./mvnw package
                     '''
-                }
             }
         }
         stage('Build') {
