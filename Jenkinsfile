@@ -17,6 +17,16 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
+                    sh '''
+                    export CR_PAT=$CRED
+                    ansible-playbook /home/ec2-user/playbook.yml
+                    '''
+                }
+            }
+        }
     }
 }
 
