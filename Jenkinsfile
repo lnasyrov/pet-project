@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('MR_Validation') {
         when {
-         changeRequest()
+         not changeRequest()
         }
             steps {
                     sh '''
