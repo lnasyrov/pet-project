@@ -31,7 +31,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            agent { label 'ansible-master' }
             steps {
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', sudo: true
                 }
