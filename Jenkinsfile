@@ -30,9 +30,16 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploy_test') {
             steps {
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION"
+                }
+            }
+        stage('Smoke_test') {
+            steps {
+                sh '''
+                sh test.sh http://107.21.151.131:8080/
+                '''
                 }
             }
         }
