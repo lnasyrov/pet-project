@@ -38,7 +38,7 @@ pipeline {
         stage('Smoke_test') {
             steps {
                 sh '''
-                ip=$(cat inventory | awk '{ print $1 }' | grep -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
+                ip=$(cat inventory | awk '{ print $1 }' | grep -E '[0-9]{1,3}/\.[0-9]{1,3}/\.[0-9]{1,3}/\.[0-9]{1,3}')
                 sh test.sh http://$ip:8080/
                 '''
                 }
