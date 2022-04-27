@@ -44,9 +44,9 @@ pipeline {
                 }
             }
         stage('Deploy_prod') {
-            input{
-              message "Do you want to proceed for production deployment?"
-            }
+            // input{
+            //   message "Do you want to proceed for production deployment?"  //strings for continious delivery
+            // }
             steps {
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory_prod', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION"
                 }
