@@ -45,7 +45,7 @@ pipeline {
             }
         stage('Deploy_prod') {
             steps {
-                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory_prod', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION -e ansible_python_interpreter=/bin/python3"
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory_prod', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION"
                 }
             }
         }
