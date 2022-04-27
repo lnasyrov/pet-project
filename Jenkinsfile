@@ -44,7 +44,9 @@ pipeline {
                 }
             }
         stage('Deploy_prod') {
-            input 'Do you approve deployment?'
+            input{
+              message "Do you want to proceed for production deployment?"
+            }
             steps {
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory_prod', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION"
                 }
