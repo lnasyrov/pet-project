@@ -38,7 +38,7 @@ pipeline {
         stage('Smoke_test') {
             steps {
                 sh '''
-                sh test.sh http://107.21.151.131:8080/
+                sh test.sh http://google.com
                 '''
                 }
             }
