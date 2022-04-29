@@ -31,9 +31,25 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploy_test') {
             steps {
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION"
+                }
+            }
+        stage('Smoke_test') {
+            steps {
+                sh '''
+                ip=$(cat inventory | awk '{ print $1 }' | grep -E '[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}')
+                sh test.sh http://$ip:8080/
+                '''
+                }
+            }
+        stage('Deploy_prod') {
+            // input{
+            //   message "Do you want to proceed for production deployment?"  //strings for continious delivery
+            // }
+            steps {
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory_prod', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION"
                 }
             }
         }
