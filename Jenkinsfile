@@ -10,7 +10,6 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
-                    echo "some message"
                     cd spring-petclinic
                     ./mvnw package
                     echo $CRED | docker login ghcr.io -u lnasyrov --password-stdin
