@@ -12,7 +12,6 @@ pipeline {
         } 
             steps {
                     sh '''
-                    echo "some message"
                     cd spring-petclinic
                     ./mvnw package
                     '''
