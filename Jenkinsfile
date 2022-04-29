@@ -6,18 +6,6 @@ pipeline {
         }
 
     stages {
-    //     stage('MR_Validation') {
-    //     when {
-    //       not {triggeredBy cause: "UserIdCause"}
-    //     } 
-    //         steps {
-    //                 sh '''
-    //                 echo "some message"
-    //                 cd spring-petclinic
-    //                 ./mvnw package
-    //                 '''
-    //         }
-    //     }
         stage('Build') {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
