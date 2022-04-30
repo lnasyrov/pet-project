@@ -10,4 +10,10 @@ jobs:
     if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     steps:
-      - run: curl http://34.229.75.164:8080/generic-webhook-trigger/invoke?token=secrettoken123
+    - name: trigger pipeline-1
+      uses: appleboy/jenkins-action@master
+      with:
+        url: "http://http://34.229.75.164:8080/"
+        user: "admin"
+        token: secret123
+        job: "Pipeline-1"
