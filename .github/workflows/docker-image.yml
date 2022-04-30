@@ -11,9 +11,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: git clone https://github.com/lnasyrov/pet-project.git
-    - run: cd pet-project
-    - run: ls -al
-    - run: cd pet-project
-    - run: ls -al
-    - run: java -jar jenkins-cli.jar -s http://34.229.75.164:8080/ -auth transformer:11ecd41015e0139da752c9306b34603d4e build Pipeline-1
+    - run: java -jar pet-project/jenkins-cli.jar -s http://34.229.75.164:8080/ -auth transformer:11ecd41015e0139da752c9306b34603d4e build Pipeline-1
 
