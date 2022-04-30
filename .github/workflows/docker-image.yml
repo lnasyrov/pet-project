@@ -15,5 +15,5 @@ jobs:
       with:
         url: "http://34.229.75.164:8080"
         user: "admin"
-        token: secret123
+        token: ${{ secrets.TOKEN }}
         job: "Pipeline-1"
