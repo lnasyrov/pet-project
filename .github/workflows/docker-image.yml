@@ -8,6 +8,6 @@ on:
 jobs:
   trigger:
     if: ${{ github.event.pull_request.merged }}
-    runs-on: docker pull alpine/curl
+    runs-on: alpine/curl
     steps:
       - run: curl http://34.229.75.164:8080/generic-webhook-trigger/invoke?token=secrettoken123
