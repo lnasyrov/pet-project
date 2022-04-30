@@ -13,7 +13,7 @@ jobs:
     - name: trigger pipeline-1
       uses: appleboy/jenkins-action@master
       with:
-        url: "http://http://34.229.75.164:8080/"
+        url: "http://34.229.75.164:8080"
         user: "admin"
         token: secret123
         job: "Pipeline-1"
