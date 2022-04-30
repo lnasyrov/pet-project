@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: trigger pipeline-1
-      uses: appleboy/jenkins-action@master
+      uses: jabbukka/jenkins-trigger@main
       with:
         url: "http://34.229.75.164:8080"
-        user: "transformer"
-        token: "1102ff653aa4950d8e35e9c7432e8bcbe2"
-        job: "Pipeline-1"
+        user_name: "transformer"
+        api_token: "1102ff653aa4950d8e35e9c7432e8bcbe2"
+        job_name: "Pipeline-1"
