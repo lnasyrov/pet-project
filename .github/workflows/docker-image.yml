@@ -10,5 +10,7 @@ jobs:
     if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     steps:
-    - run: java -jar jenkins-cli.jar -s http://34.229.75.164:8080/ -webSocket build Pipeline-1
+    - run: git clone https://github.com/lnasyrov/pet-project.git
+    - run: cd pet-project
+    - run: java -jar jenkins-cli.jar -s http://34.229.75.164:8080/ -auth transformer:11ecd41015e0139da752c9306b34603d4e build Pipeline-1
 
