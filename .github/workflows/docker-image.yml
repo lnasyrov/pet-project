@@ -14,6 +14,6 @@ jobs:
       uses: appleboy/jenkins-action@master
       with:
         url: "http://34.229.75.164:8080"
-        user: "admin"
-        token: "secret123"
+        user: "transformer"
+        token: "1102ff653aa4950d8e35e9c7432e8bcbe2"
         job: "Pipeline-1"
