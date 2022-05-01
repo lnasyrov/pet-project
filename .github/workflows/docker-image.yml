@@ -1,9 +1,9 @@
-name: Trigger for MR
+name: Trigger for pipeline
 
 on:
   pull_request:
     branches: [ main ]
-    types: [opened, closed]
+    types: [closed]
 
 jobs:
   trigger_pipeline:
@@ -12,10 +12,4 @@ jobs:
     steps:
     - run: git clone https://github.com/lnasyrov/pet-project.git
     - run: java -jar pet-project/jenkins-cli.jar -s http://34.229.75.164:8080/ -auth admin:11ecd41015e0139da752c9306b34603d4e build Pipeline-1
-    
-  trigger_validation:
-    if: ${{ github.event.pull_request == 'opened' }}
-    runs-on: ubuntu-18.04
-    steps:
-    - run: git clone https://github.com/lnasyrov/pet-project.git
-    - run: java -jar pet-project/jenkins-cli.jar -s http://34.229.75.164:8080/ -auth admin:11ecd41015e0139da752c9306b34603d4e build MR_Validation
+
