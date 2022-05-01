@@ -14,7 +14,6 @@ jobs:
       JENKINS_URL: ${{ secrets.JENKINS_URL }}
     steps:
     - run: echo $TOKEN
-    - run: echo $JENKINS_URL
-    - run: echo "$USER"
+    - run: echo $#TOKEN
     - run: git clone https://github.com/lnasyrov/pet-project.git
-    - run: java -jar pet-project/jenkins-cli.jar -s "$JENKINS_URL" -auth "$USER":"$TOKEN" build MR_Validation
+    - run: java -jar pet-project/jenkins-cli.jar -s $JENKINS_URL -auth $USER:$TOKEN build MR_Validation
