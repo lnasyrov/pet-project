@@ -1,4 +1,4 @@
-name: Trigger for MR
+name: Trigger for pipeline
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
     types: [closed]
 
 jobs:
-  trigger:
+  trigger_pipeline:
     if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-18.04
     steps:
