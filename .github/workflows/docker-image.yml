@@ -3,7 +3,6 @@ name: Trigger for MR
 on:
   pull_request:
     branches: [ main ]
-    types: [closed]
 
 jobs:
   trigger_pipeline:
