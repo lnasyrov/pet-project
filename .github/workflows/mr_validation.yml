@@ -9,9 +9,9 @@ jobs:
   trigger_validation:
     runs-on: ubuntu-18.04
     env:
-      TOKEN: '${{ secrets.TOKEN }}'
-      USER: '${{ secrets.USER }}'
-      JENKINS_URL: '${{ secrets.JENKINS_URL }}'
+      TOKEN: ${{ secrets.TOKEN }}
+      USER: ${{ secrets.USER }}
+      JENKINS_URL: ${{ secrets.JENKINS_URL }}
     steps:
     - run: echo $TOKEN
     - run: echo $JENKINS_URL
