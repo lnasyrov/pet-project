@@ -9,11 +9,9 @@ jobs:
   trigger_validation:
     runs-on: ubuntu-18.04
     env:
-      TOKEN: ${{ secrets.TOKEN }}
-      USER: ${{ secrets.USER }}
-      JENKINS_URL: ${{ secrets.JENKINS_URL }}
+      TOKEN1: ${{ secrets.TOKEN1 }}
+      USER1: ${{ secrets.USER1 }}
+      JENKINS_URL1: ${{ secrets.JENKINS_URL1 }}
     steps:
-    - run: echo $TOKEN
-    - run: echo $#TOKEN
     - run: git clone https://github.com/lnasyrov/pet-project.git
-    - run: java -jar pet-project/jenkins-cli.jar -s $JENKINS_URL -auth $USER:$TOKEN build MR_Validation
+    - run: java -jar pet-project/jenkins-cli.jar -s $JENKINS_URL1 -auth $USER1:$TOKEN1 build MR_Validation
