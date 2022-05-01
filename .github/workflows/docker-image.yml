@@ -14,7 +14,7 @@ jobs:
     - run: java -jar pet-project/jenkins-cli.jar -s http://34.229.75.164:8080/ -auth admin:11ecd41015e0139da752c9306b34603d4e build Pipeline-1
     
   trigger_validation:
-    if: ${{ github.event.pull_request.created }}
+    if: ${{ github.event.pull_request_target.opened }}
     runs-on: ubuntu-18.04
     steps:
     - run: git clone https://github.com/lnasyrov/pet-project.git
