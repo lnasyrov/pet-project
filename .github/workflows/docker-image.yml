@@ -10,9 +10,9 @@ jobs:
     if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-18.04
     env:
-      TOKEN: ${{ secrets.TOKEN }}
-      USER: ${{ secrets.USER }}
-      JENKINS_URL: ${{ secrets.JENKINS_URL }}
+      TOKEN: ${{ TOKEN.TOKEN }}
+      USER: ${{ TOKEN.USER }}
+      JENKINS_URL: ${{ TOKEN.JENKINS_URL }}
     steps:
     - run: git clone https://github.com/lnasyrov/pet-project.git
     - run: java -jar pet-project/jenkins-cli.jar -s "$JENKINS_URL" -auth "$USER":"$TOKEN" build Pipeline-1
