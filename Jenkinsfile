@@ -34,7 +34,7 @@ pipeline {
                 VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
                 if [[ $APP_VERSION == 'latest' ]]; then export APP_VERSION=$VERSION; fi
                 '''
-                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e VERSION=$APP_VERSION"
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e VERSION=${APP_VERSION}"
                 }
             }
         stage('Smoke_test') {
