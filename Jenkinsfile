@@ -30,8 +30,11 @@ pipeline {
                 a=$(cat pom.xml | grep SNAPSHOT)
                 ORIGIN_VERSION=$(echo $a | sed 's@<version>@@g' | sed 's@</version>@@g')
                 VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
-                if [[ $APP_VERSION == 'latest' ]]; then APP_VERSION=$VERSION; fi
+                if [[ $APP_VERSION == 'latest' ]]; then echo $VERSION > ../version.txt; fi
                 '''
+                script {
+                APP_VERSION = readFile('version.txt').trim()
+                }
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e VERSION=$APP_VERSION"
                 }
             }
