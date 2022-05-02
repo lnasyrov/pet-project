@@ -14,11 +14,12 @@ pipeline {
                     a=$(cat pom.xml | grep SNAPSHOT)
                     ORIGIN_VERSION=$(echo $a | sed 's@<version>@@g' | sed 's@</version>@@g')
                     VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
-                    if [[ $APP_VERSION == 'latest' ]]; then APP_VERSION > ../version.txt; fi
+                    if [[ $APP_VERSION == 'latest' ]]; then echo $VERSION > ../version.txt; fi
+                    STG_VERSION=$(cat ../version.txt)
                     ./mvnw package
                     echo $CRED | docker login ghcr.io -u lnasyrov --password-stdin
-                    docker build . -t ghcr.io/lnasyrov/petclinic:$APP_VERSION
-                    docker push ghcr.io/lnasyrov/petclinic:$APP_VERSION
+                    docker build . -t ghcr.io/lnasyrov/petclinic:$STG_VERSION
+                    docker push ghcr.io/lnasyrov/petclinic:$STG_VERSION
                     '''
                 }
             }
