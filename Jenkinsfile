@@ -34,7 +34,7 @@ pipeline {
                 echo "ORIGIN_VERSION=$ORIGIN_VERSION" > ./version.env
                 VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
                 echo "VERSION=$VERSION" >> ./version.env
-                if [[ $APP_VERSION == 'latest' ]]; then APP_VERSION=$VERSION; fi
+                if [[ $APP_VERSION == 'latest' ]]; then $env.APP_VERSION=$VERSION; fi
                 '''
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e VERSION=$APP_VERSION"
                 }
@@ -59,7 +59,7 @@ pipeline {
                 echo "ORIGIN_VERSION=$ORIGIN_VERSION" > ./version.env
                 VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
                 echo "VERSION=$VERSION" >> ./version.env
-                if [[ $APP_VERSION == 'latest' ]]; then APP_VERSION=$VERSION; fi
+                if [[ $APP_VERSION == 'latest' ]]; then $env.APP_VERSION=$VERSION; fi
                 '''
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory_prod', playbook: 'playbook.yml', extras: "-e VERSION=$APP_VERSION"
                 }
