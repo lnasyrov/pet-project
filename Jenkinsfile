@@ -35,6 +35,7 @@ pipeline {
         stage('Smoke_test') {
             steps {
                 sh '''
+                sleep 15
                 ip=$(cat inventory | awk '{ print $1 }' | grep -E '[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}')
                 sh test.sh http://$ip:8080/
                 '''
@@ -45,13 +46,9 @@ pipeline {
             //   message "Do you want to proceed for production deployment?"  //strings for continious delivery
             // }
             steps {
-                sh '''
-                cd spring-petclinic
-                a=$(cat pom.xml | grep SNAPSHOT)
-                ORIGIN_VERSION=$(echo $a | sed 's@<version>@@g' | sed 's@</version>@@g')
-                VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
-                if [[ $APP_VERSION == 'latest' ]]; then APP_VERSION=$VERSION; fi
-                '''
+                script {
+                APP_VERSION = readFile('version.txt').trim()
+                }
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory_prod', playbook: 'playbook.yml', extras: "-e VERSION=$APP_VERSION"
                 }
             }
