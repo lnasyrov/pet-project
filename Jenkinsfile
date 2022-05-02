@@ -11,7 +11,8 @@ pipeline {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
                     cd spring-petclinic
-                    ORIGIN_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null)
+                    a=$(cat pom.xml | grep SNAPSHOT)
+                    ORIGIN_VERSION=$(echo $a | sed 's@<version>@@g' | sed 's@</version>@@g')
                     echo "ORIGIN_VERSION=$ORIGIN_VERSION" > ./version.env
                     VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
                     echo "VERSION=$VERSION" >> ./version.env
