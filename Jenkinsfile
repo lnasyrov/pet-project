@@ -16,19 +16,19 @@ pipeline {
                     echo "ORIGIN_VERSION=$ORIGIN_VERSION" > ./version.env
                     VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
                     echo "VERSION=$VERSION" >> ./version.env
-                    if [[ $APP_VERSION == "latest" && -f version.env ]]; then source version.env; APP_VERSION=$VERSION; fi
-                    mvn versions:set -DnewVersion=$VERSION
+                    if [[ $APP_VERSION == 'latest' ]]; then APP_VERSION=$VERSION; fi
+                    mvn versions:set -DnewVersion=$APP_VERSION
                     ./mvnw package
                     echo $CRED | docker login ghcr.io -u lnasyrov --password-stdin
-                    docker build . -t ghcr.io/lnasyrov/petclinic:$VERSION
-                    docker push ghcr.io/lnasyrov/petclinic:$VERSION
+                    docker build . -t ghcr.io/lnasyrov/petclinic:$APP_VERSION
+                    docker push ghcr.io/lnasyrov/petclinic:$APP_VERSION
                     '''
                 }
             }
         }
         stage('Deploy_test') {
             steps {
-                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION"
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e VERSION=$APP_VERSION"
                 }
             }
         stage('Smoke_test') {
@@ -44,7 +44,7 @@ pipeline {
             //   message "Do you want to proceed for production deployment?"  //strings for continious delivery
             // }
             steps {
-                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory_prod', playbook: 'playbook.yml', extras: "-e VERSION=$VERSION"
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory_prod', playbook: 'playbook.yml', extras: "-e VERSION=$APP_VERSION"
                 }
             }
         }
