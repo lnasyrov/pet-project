@@ -34,7 +34,7 @@ pipeline {
                 echo "ORIGIN_VERSION=$ORIGIN_VERSION" > ./version.env
                 VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
                 echo "VERSION=$VERSION" >> ./version.env
-                if [[ $APP_VERSION == 'latest' ]]; then echo VERSION=$VERSION > ../version.txt; fi
+                if $APP_VERSION.equals('latest'){echo $VERSION > ../version.txt}
                 '''
                 ansiblePlaybook become: true, colorized: true, credentialsId: 'linar-key', disableHostKeyChecking: true, inventory: 'inventory', playbook: 'playbook.yml', extras: "-e @version.txt"
                 }
