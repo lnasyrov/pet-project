@@ -17,7 +17,6 @@ pipeline {
                     VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
                     echo "VERSION=$VERSION" >> ./version.env
                     if [[ $APP_VERSION == 'latest' ]]; then APP_VERSION=$VERSION; fi
-                    mvn versions:set -DnewVersion=$APP_VERSION
                     ./mvnw package
                     echo $CRED | docker login ghcr.io -u lnasyrov --password-stdin
                     docker build . -t ghcr.io/lnasyrov/petclinic:$APP_VERSION
