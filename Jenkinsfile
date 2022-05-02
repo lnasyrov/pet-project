@@ -11,11 +11,11 @@ pipeline {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
                     cd spring-petclinic
-                    if [[ $APP_VERSION == "latest" && -f version.env ]]; then source version.env; APP_VERSION=$VERSION; fi
                     ORIGIN_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
                     echo "ORIGIN_VERSION=$ORIGIN_VERSION" > ./version.env
                     VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')-$CI_COMMIT/g")
                     echo "VERSION=$VERSION" >> ./version.env
+                    if [[ $APP_VERSION == "latest" && -f version.env ]]; then source version.env; APP_VERSION=$VERSION; fi
                     mvn versions:set -DnewVersion=$VERSION
                     ./mvnw package
                     echo $CRED | docker login ghcr.io -u lnasyrov --password-stdin
