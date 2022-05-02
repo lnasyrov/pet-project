@@ -13,7 +13,7 @@ pipeline {
                     cd spring-petclinic
                     ORIGIN_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null)
                     echo "ORIGIN_VERSION=$ORIGIN_VERSION" > ./version.env
-                    VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')-$CI_COMMIT/g")
+                    VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
                     echo "VERSION=$VERSION" >> ./version.env
                     if [[ $APP_VERSION == "latest" && -f version.env ]]; then source version.env; APP_VERSION=$VERSION; fi
                     mvn versions:set -DnewVersion=$VERSION
