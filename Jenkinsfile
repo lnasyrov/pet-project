@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(defaultValue: 'latest', description: 'Enter version of the image', name: 'VERSION')
+        string(defaultValue: 'latest', description: 'Enter version of the image', name: 'APP_VERSION')
         }
 
     stages {
@@ -10,8 +10,13 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
-                    echo "some message"
                     cd spring-petclinic
+                    if [[ $APP_VERSION == "latest" && -f version.env ]]; then source version.env; APP_VERSION=$VERSION; fi
+                    ORIGIN_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)
+                    echo "ORIGIN_VERSION=$ORIGIN_VERSION" > ./version.env
+                    VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')-$CI_COMMIT/g")
+                    echo "VERSION=$VERSION" >> ./version.env
+                    mvn versions:set -DnewVersion=$VERSION
                     ./mvnw package
                     echo $CRED | docker login ghcr.io -u lnasyrov --password-stdin
                     docker build . -t ghcr.io/lnasyrov/petclinic:$VERSION
