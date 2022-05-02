@@ -12,7 +12,7 @@ pipeline {
                     sh '''
                     cd spring-petclinic
                     if [[ $APP_VERSION == "latest" && -f version.env ]]; then source version.env; APP_VERSION=$VERSION; fi
-                    ORIGIN_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)
+                    ORIGIN_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
                     echo "ORIGIN_VERSION=$ORIGIN_VERSION" > ./version.env
                     VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')-$CI_COMMIT/g")
                     echo "VERSION=$VERSION" >> ./version.env
