@@ -11,6 +11,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'GitHub_token', variable: 'CRED')]){
                     sh '''
                     cd spring-petclinic
+                    echo "some message"
                     a=$(cat pom.xml | grep SNAPSHOT)
                     ORIGIN_VERSION=$(echo $a | sed 's@<version>@@g' | sed 's@</version>@@g')
                     VERSION=$(echo $ORIGIN_VERSION | sed "s/SNAPSHOT/$(date +'%Y%m%d_%H%M%S')/g")
